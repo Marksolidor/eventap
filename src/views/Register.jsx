@@ -8,7 +8,7 @@ const Register = () => {
 
   const handleSubmit = async (formData) => {
     try {
-      const res = await axios.post("https://eventapp-backend-production.up.railway.app/users/register", formData);
+      const res = await axios.post("http://eventapp-backend-production.up.railway.app/auth/register", formData);
       const newUser = res.data;
       login(newUser.email, newUser.password);
       alert("Usuario registrado con éxito, inicie sesión");

@@ -12,7 +12,7 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("https://eventapp-backend-production.up.railway.app/users/login", {
+      const response = await axios.post("http://eventapp-backend-production.up.railway.app/auth/login", {
         email,
         password
       });
@@ -37,7 +37,7 @@ function Login() {
                 type="email"
                 className="form-control"
                 id="email"
-                value={email}
+                placeholder="Enter email"
                 onChange={(event) => setEmail(event.target.value)}
                 required
               />

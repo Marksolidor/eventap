@@ -6,7 +6,7 @@ function useEventData() {
   useEffect(() => {
     const jsonData = async () => {
       try {
-        const response = await fetch("https://eventapp-backend-production.up.railway.app/events");
+        const response = await fetch("http://eventapp-backend-production.up.railway.app/events");
         const data = await response.json();
         setEvents(data);
       } catch (e) {
