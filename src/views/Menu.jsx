@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const Menu = () => {
   const { user, logout } = useContext(AuthContext);
@@ -8,17 +9,19 @@ const Menu = () => {
   const [lastName, setLastName] = useState("");
 
   const handleLogout = () => {
-    logout();
+    axios.post("eventapp-backend-production.up.railway.app/auth/logout")
+      .then((response) => {
+        logout();
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     if (user && user.id) {
-      fetch("/users.json")
-        .then((response) => response.json())
-        .then((data) => {
-          const userData = data.find((u) => u.id === user.id);
-          setName(userData.name);
-          setLastName(userData.lastName);
+      axios.get(`eventapp-backend-production.up.railway.app/users/${user.id}`)
+        .then((response) => {
+          setName(response.data.name);
+          setLastName(response.data.lastName);
         })
         .catch((error) => console.log(error));
     }
@@ -27,6 +30,19 @@ const Menu = () => {
   useEffect(() => {
     console.log("User:", user);
   }, [user]);
+
+  const handleUpdateUser = () => {
+    const updatedUser = {
+      name: name,
+      lastName: lastName
+    }
+    axios.patch(`eventapp-backend-production.up.railway.app/users/${user.id}`, updatedUser)
+      .then((response) => {
+        console.log(response.data);
+        alert("Usuario actualizado");
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="mt-4 d-flex justify-content-center">
@@ -50,6 +66,12 @@ const Menu = () => {
           className="btn btn-danger mb-3 btn-block"
         >
           Cerrar sesión
+        </button>
+        <button
+          onClick={handleUpdateUser}
+          className="btn btn-primary mb-3 btn-block"
+        >
+          Guardar cambios
         </button>
       </div>
     </div>

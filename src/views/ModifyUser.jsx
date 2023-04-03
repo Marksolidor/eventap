@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const EditProfile = () => {
   const [name, setName] = useState("");
@@ -7,12 +8,11 @@ const EditProfile = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    fetch("/users.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const user = data.users[0];
+    axios.get("http://eventapp-backend-production.up.railway.app/users/:id")
+      .then((response) => {
+        const user = response.data;
         setName(user.name);
-        setLastName(user.lastname);
+        setLastName(user.lastName);
         setEmail(user.email);
       })
       .catch((error) => console.log(error));
@@ -20,6 +20,11 @@ const EditProfile = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    axios.patch(`http://eventapp-backend-production.up.railway.app/users/:id`, { name, lastName, email })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -40,13 +45,13 @@ const EditProfile = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="lastname" className="form-label">
+              <label htmlFor="lastName" className="form-label">
                 Apellido
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="lastname"
+                id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />

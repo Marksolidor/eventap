@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import useUserRegistration from "../hooks/useUserRegistration";
 
-const RegisterForm = ({ onRegisterSuccess }) => {
+const RegisterForm = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickname, setNickname] = useState("");
@@ -10,12 +11,9 @@ const RegisterForm = ({ onRegisterSuccess }) => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState("");
-  
 
-  const {
-    registerUser,
-    isRegistered,
-  } = useUserRegistration();
+  const { registerUser } = useUserRegistration();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,12 +37,16 @@ const RegisterForm = ({ onRegisterSuccess }) => {
       password,
     };
 
-    registerUser(user);
-  };
+    try {
+      await registerUser(user);
+      await login(email, password);
+    } catch (error) {
+      console.log("Error al registrar el usuario:", error);
+    }
 
-  if (isRegistered) {
-    onRegisterSuccess();
-  }
+    // Call the onSubmit prop with the user object
+    onSubmit(user);
+  };
 
   return (
     <form onSubmit={handleSubmit}>

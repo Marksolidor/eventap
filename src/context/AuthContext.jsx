@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -6,16 +7,15 @@ function AuthProvider(props) {
   const [user, setUser] = useState(null);
 
   const login = async (email, password) => {
-    const response = await fetch("/users.json");
-    const data = await response.json();
-    const foundUser = data.users.find(
-      (user) => user.email === email && user.password === password
-    );
-
-    if (foundUser) {
-      setUser(foundUser);
-      console.log("Usuario guardado:", foundUser);
-    } else {
+    try {
+      const response = await axios.post("https://eventapp-backend-production.up.railway.app/users", {
+        email,
+        password,
+      });
+      const data = response.data;
+      setUser(data);
+      console.log("Usuario guardado:", data);
+    } catch (error) {
       throw new Error("Credenciales inválidas");
     }
   };
