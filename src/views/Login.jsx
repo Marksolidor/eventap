@@ -12,7 +12,7 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://eventapp-backend-production.up.railway.app/auth/login", {
+      const response = await axios.post("https://eventapp-backend-production.up.railway.app/auth/login", {
         email,
         password
       });
