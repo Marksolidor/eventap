@@ -8,7 +8,7 @@ function AuthProvider(props) {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post("http://eventapp-backend-production.up.railway.app/auth/login", {
+      const response = await axios.post("http://localhost:8080/auth/login", {
         email,
         password,
       });

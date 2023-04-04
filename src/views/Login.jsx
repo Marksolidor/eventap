@@ -12,11 +12,12 @@ function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://eventapp-backend-production.up.railway.app/auth/login", {
+      const response = await axios.post("http://localhost:8080/auth/login", {
         email,
         password
       });
       const token = response.data.token;
+      console.log("Token:", token)
       localStorage.setItem("token", token);
       await login(email, password);
       window.location.replace("/");

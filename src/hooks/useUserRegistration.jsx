@@ -13,7 +13,7 @@ const useUserRegistration = () => {
 
     try {
       const response = await axios.post(
-        "http://eventapp-backend-production.up.railway.app/auth/register",
+        "http://localhost:8080/users",
         user
       );
 
