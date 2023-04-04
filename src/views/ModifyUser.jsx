@@ -8,7 +8,8 @@ const EditProfile = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    axios.get("https://eventapp-backend-production.up.railway.app/users/:id")
+
+    axios.get("http://localhost:8080/users/:id")
       .then((response) => {
         const user = response.data;
         setName(user.name);
@@ -20,7 +21,7 @@ const EditProfile = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.patch(`https://eventapp-backend-production.up.railway.app/users/:id`, { name, lastName, email })
+    axios.put(`http://localhost:8080/users/:id`, { name, lastName, email })
       .then((response) => {
         console.log(response.data);
       })

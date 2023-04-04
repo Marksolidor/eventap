@@ -17,7 +17,7 @@ function CrearEvento() {
     event.preventDefault();
     const formData = new FormData(event.target);
     formData.append('imagen_evento', imagenEvento);
-    axios.post('https://eventapp-backend-production.up.railway.app/events', formData)
+    axios.post('http://localhost:8080/events', formData)
       .then(response => {
         console.log(response.data);
       })

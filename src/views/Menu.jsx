@@ -9,8 +9,7 @@ const Menu = () => {
   const [lastName, setLastName] = useState("");
 
   const handleLogout = () => {
-    axios
-      .post("https://eventapp-backend-production.up.railway.app/auth/logout")
+    axios.post("http://localhost:8080/auth/logout")
       .then((response) => {
         logout();
       })
@@ -19,10 +18,7 @@ const Menu = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      axios
-        .get(
-          `https://eventapp-backend-production.up.railway.app/users/${user.id}`
-        )
+      axios.get(`http://localhost:8080/users/${user.id}`)
         .then((response) => {
           setName(response.data.name);
           setLastName(response.data.lastName);
@@ -38,13 +34,9 @@ const Menu = () => {
   const handleUpdateUser = () => {
     const updatedUser = {
       name: name,
-      lastName: lastName,
-    };
-    axios
-      .patch(
-        `https://eventapp-backend-production.up.railway.app/users/${user.id}`,
-        updatedUser
-      )
+      lastName: lastName
+    }
+    axios.put(`http://localhost:8080/users/${user.id}`, updatedUser)
       .then((response) => {
         console.log(response.data);
         alert("Usuario actualizado");
