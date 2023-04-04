@@ -1,8 +1,4 @@
-Deploy: https://eventap.netlify.app/
-
-Para ingresar a Login utilizar
-- ejemplo@gmail.com
-- password: 12345678
+Deploy: https://eventopss.netlify.app/
 
 
 Instalar

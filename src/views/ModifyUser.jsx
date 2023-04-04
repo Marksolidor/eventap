@@ -8,6 +8,7 @@ const EditProfile = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
+
     axios.get("http://localhost:8080/users/:id")
       .then((response) => {
         const user = response.data;
